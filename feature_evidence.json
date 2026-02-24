@@ -1,0 +1,151 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-product-catalog-page-that-displays-all-available-products-in-a-responsive-grid-with-each-product-card-showing-image-name-price-and-an-add-to-cart-button-include-category-filtering-and-a-search-bar",
+      "featureTitle": "Build a product catalog page that displays all available products in a responsive grid, with each product card showing image, name, price, and an 'Add to Cart' button. Include category filtering and a search bar.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-product-detail-page-that-shows-full-product-information-name-description-price-image-stock-allows-quantity-selection-and-provides-an-add-to-cart-button",
+      "featureTitle": "Build a product detail page that shows full product information (name, description, price, image, stock), allows quantity selection, and provides an 'Add to Cart' button.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/pages/ProductDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-shopping-cart-page-that-lists-all-cart-items-with-quantity-controls-increment-decrement-remove-displays-line-item-totals-and-a-grand-total-and-includes-a-proceed-to-checkout-button",
+      "featureTitle": "Build a shopping cart page that lists all cart items with quantity controls (increment/decrement/remove), displays line-item totals and a grand total, and includes a 'Proceed to Checkout' button.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/CartPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-checkout-page-that-shows-an-order-summary-and-a-place-order-button-on-confirmation-the-order-is-submitted-to-the-backend-and-the-user-is-shown-a-success-screen-with-the-order-id",
+      "featureTitle": "Build a checkout page that shows an order summary and a 'Place Order' button. On confirmation, the order is submitted to the backend and the user is shown a success screen with the order ID.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/CheckoutPage.tsx",
+        "frontend/src/pages/OrderSuccessPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-order-history-page-where-authenticated-users-can-view-their-past-orders-including-order-date-items-total-and-status",
+      "featureTitle": "Build an order history page where authenticated users can view their past orders, including order date, items, total, and status.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/OrderHistoryPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-bold-modern-retail-visual-theme-across-the-entire-app-using-a-warm-earthy-palette-deep-terracotta-cream-and-charcoal-clean-sans-serif-typography-generous-whitespace-and-consistent-card-based-layouts-with-smooth-hover-interactions",
+      "featureTitle": "Apply a bold, modern retail visual theme across the entire app using a warm earthy palette (deep terracotta, cream, and charcoal), clean sans-serif typography, generous whitespace, and consistent card-based layouts with smooth hover interactions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-render-the-generated-hero-banner-image-and-logo-as-static-assets-in-the-app-header-and-catalog-hero-section-from-frontend-public-assets-generated",
+      "featureTitle": "Render the generated hero banner image and logo as static assets in the app header and catalog hero section from frontend/public/assets/generated.",
+      "files": [
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

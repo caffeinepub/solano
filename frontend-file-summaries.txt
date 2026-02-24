@@ -1,0 +1,16 @@
+{
+  "frontend/src/index.css": "Global styles with warm earthy OKLCH color system (terracotta primary, cream background, charcoal neutrals), Google Fonts import for Playfair Display and Inter, and base typography setup.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with custom font families (Playfair Display, Inter), terracotta/cream/charcoal color palettes, card shadow utilities, and fade-in animation keyframes.",
+  "frontend/src/hooks/useQueries.ts": "All React Query hooks for the backend — user profile (get/save), products (list/get), cart (get/add/update/remove), and orders (get/place).",
+  "frontend/src/components/Layout.tsx": "Full-page layout wrapper with sticky header (logo, nav links, cart badge, auth button), responsive mobile menu, and branded footer with caffeine.ai attribution.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog that appears on first login to collect the user's name and save their profile via saveCallerUserProfile.",
+  "frontend/src/components/ProductCard.tsx": "Reusable product card with image, category badge, name, price, hover effects, and Add to Cart button with toast feedback.",
+  "frontend/src/pages/CatalogPage.tsx": "Product catalog page with hero banner, search input, category filter pills, responsive product grid (1–4 columns), loading skeletons, and empty states.",
+  "frontend/src/pages/ProductDetailPage.tsx": "Full product detail page with large image, description, stock indicator, quantity selector, and Add to Cart button.",
+  "frontend/src/pages/CartPage.tsx": "Shopping cart page listing all items with quantity controls, remove buttons, line totals, grand total summary panel, and Proceed to Checkout button.",
+  "frontend/src/pages/CheckoutPage.tsx": "Checkout page showing order summary with a dedicated `CheckoutItemRow` component (fixing the hooks-in-callback violation), grand total, and a Place Order button that calls the backend and navigates to the success page.",
+  "frontend/src/pages/OrderSuccessPage.tsx": "Order confirmation page displaying a success icon, order ID, and navigation buttons to orders history or catalog.",
+  "frontend/src/pages/OrderHistoryPage.tsx": "Order history page listing all past orders in reverse chronological order with status badges, item details, and totals.",
+  "frontend/src/pages/HomePage.tsx": "Landing home page with hero section, feature highlights (curated selection, secure shopping, fast delivery), and a CTA section linking to the catalog.",
+  "frontend/src/App.tsx": "Main app component with TanStack Router setup, all route definitions, ThemeProvider, Toaster, and root layout with profile setup modal integration."
+}
