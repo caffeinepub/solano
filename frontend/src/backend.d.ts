@@ -55,6 +55,7 @@ export interface backendInterface {
     isCallerAdmin(): Promise<boolean>;
     listProducts(): Promise<Array<Product>>;
     placeOrder(): Promise<bigint>;
+    registerAdmin(newAdmin: Principal): Promise<void>;
     removeCartItem(productId: bigint): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     updateCartItem(productId: bigint, quantity: bigint): Promise<void>;

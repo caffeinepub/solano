@@ -138,6 +138,7 @@ export interface backendInterface {
     isCallerAdmin(): Promise<boolean>;
     listProducts(): Promise<Array<Product>>;
     placeOrder(): Promise<bigint>;
+    registerAdmin(newAdmin: Principal): Promise<void>;
     removeCartItem(productId: bigint): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     updateCartItem(productId: bigint, quantity: bigint): Promise<void>;
@@ -339,6 +340,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.placeOrder();
+            return result;
+        }
+    }
+    async registerAdmin(arg0: Principal): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.registerAdmin(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.registerAdmin(arg0);
             return result;
         }
     }

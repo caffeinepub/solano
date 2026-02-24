@@ -5,7 +5,6 @@ import {
     createRootRoute,
     RouterProvider,
     Outlet,
-    redirect,
 } from '@tanstack/react-router';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from 'next-themes';
@@ -18,6 +17,7 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
+import AdminPage from './pages/AdminPage';
 import { useGetCallerUserProfile } from './hooks/useQueries';
 import { useInternetIdentity } from './hooks/useInternetIdentity';
 
@@ -84,6 +84,12 @@ const ordersRoute = createRoute({
     component: OrderHistoryPage,
 });
 
+const adminRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/admin',
+    component: AdminPage,
+});
+
 const routeTree = rootRoute.addChildren([
     indexRoute,
     catalogRoute,
@@ -92,6 +98,7 @@ const routeTree = rootRoute.addChildren([
     checkoutRoute,
     orderSuccessRoute,
     ordersRoute,
+    adminRoute,
 ]);
 
 const router = createRouter({ routeTree });

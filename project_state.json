@@ -1,11 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "E-commerce app named Solano7m being built for the user.",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Wide e-commerce hero banner with warm earthy terracotta and cream tones, abstract lifestyle product backdrop with geometric shapes and subtle texture (hero-banner.dim_1400x500.png)\n- Minimalist wordmark logo for 'Solano7m' in charcoal lettering on a transparent background with a small decorative accent mark (solano7m-logo.dim_320x80.png)",
   "existing_features": [
     {
       "id": "feature-build-a-product-catalog-page-that-displays-all-available-products-in-a-responsive-grid-with-each-product-card-showing-image-name-price-and-an-add-to-cart-button-include-category-filtering-and-a-search-bar",
@@ -62,6 +61,22 @@
         "REQ-10"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-build-an-admin-panel-page-at-admin-accessible-only-to-authenticated-users-with-the-admin-role-the-page-must-include-a-product-list-table-showing-all-products-name-category-price-stock-an-add-product-form-name-description-price-category-stock-quantity-image-url-an-edit-product-form-pre-populated-with-existing-product-data-and-a-delete-product-button-with-confirmation-non-admin-users-who-visit-admin-should-see-an-access-denied-message",
+      "title": "Build an Admin Panel page at /admin accessible only to authenticated users with the admin role. The page must include: a product list table showing all products (name, category, price, stock), an 'Add Product' form (name, description, price, category, stock quantity, image URL), an 'Edit Product' form pre-populated with existing product data, and a 'Delete Product' button with confirmation. Non-admin users who visit /admin should see an access-denied message.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-navigation-link-in-the-app-header-layout-tsx-that-is-visible-only-when-the-authenticated-user-has-the-admin-role-linking-to-admin",
+      "title": "Add an 'Admin' navigation link in the app header (Layout.tsx) that is visible only when the authenticated user has the admin role, linking to /admin.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -92,6 +107,20 @@
       "summary": "Implement an order system on the backend where a user can place an order from their current cart, storing order history (order id, items, total, timestamp, status) per user.",
       "reqIds": [
         "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add an admin panel for product management (add/edit/delete products with name, description, price, category, stock, image URL) accessible only to authorized admin users.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add a backend function to register or designate a specific principal as an admin. Ensure the existing role-based access control (admin/user) in the backend actor is used to gate all product CRUD operations so only admin principals can add, edit, or delete products.",
+      "reqIds": [
+        "REQ-11"
       ],
       "status": "pending"
     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
-import { ShoppingCart, Package, Store, Menu, X, Heart } from 'lucide-react';
+import { ShoppingCart, Package, Store, Menu, X, Heart, ShieldCheck } from 'lucide-react';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { useQueryClient } from '@tanstack/react-query';
-import { useGetCart } from '../hooks/useQueries';
+import { useGetCart, useIsCallerAdmin } from '../hooks/useQueries';
 import { Button } from '@/components/ui/button';
 
 interface LayoutProps {
@@ -48,6 +48,7 @@ export default function Layout({ children }: LayoutProps) {
     const { login, clear, loginStatus, identity, isInitializing } = useInternetIdentity();
     const queryClient = useQueryClient();
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+    const { data: isAdmin } = useIsCallerAdmin();
 
     const isAuthenticated = !!identity;
     const isLoggingIn = loginStatus === 'logging-in';
@@ -112,6 +113,14 @@ export default function Layout({ children }: LayoutProps) {
                                             Orders
                                         </span>
                                     </NavLink>
+                                    {isAdmin && (
+                                        <NavLink to="/admin">
+                                            <span className="flex items-center gap-1.5">
+                                                <ShieldCheck className="w-4 h-4" />
+                                                Admin
+                                            </span>
+                                        </NavLink>
+                                    )}
                                 </>
                             )}
                         </nav>
@@ -173,6 +182,15 @@ export default function Layout({ children }: LayoutProps) {
                                 >
                                     <Package className="w-4 h-4" /> Orders
                                 </Link>
+                                {isAdmin && (
+                                    <Link
+                                        to="/admin"
+                                        className="flex items-center gap-2 py-2 text-sm font-medium text-primary hover:text-primary/80"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                        <ShieldCheck className="w-4 h-4" /> Admin
+                                    </Link>
+                                )}
                             </>
                         )}
                         <div className="pt-2 border-t border-border">

@@ -1,215 +1,78 @@
 {
   "kind": "build_request",
-  "title": "Build Solano7m E-Commerce App",
+  "title": "Add Admin Panel for Product Management",
   "projectName": "Solano7m",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a backend actor that stores and manages product listings (id, name, description, price, image URL, category, stock quantity), supports CRUD operations for products, and persists data across upgrades.",
+      "id": "REQ-11",
+      "text": "Add a backend function to register or designate a specific principal as an admin. Ensure the existing role-based access control (admin/user) in the backend actor is used to gate all product CRUD operations so only admin principals can add, edit, or delete products.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-8"
         ],
         "quotes": [
-          "Create an ecomerce app for me with the app name of solano7m"
+          "Okay please add me in admin panel"
         ]
       },
       "acceptanceCriteria": [
-        "Products can be created, read, updated, and deleted via backend calls.",
-        "Product data includes id, name, description, price, imageUrl, category, and stock.",
-        "Data persists across canister upgrades."
+        "A designated principal can be set as admin in the backend actor.",
+        "Non-admin principals are rejected when calling product create/update/delete endpoints.",
+        "The currently authenticated user (the app owner) is granted admin role."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Implement a shopping cart on the backend that allows adding, updating quantity, and removing items per user (keyed by principal), and returns the cart contents with totals.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Users can add a product with a quantity to their cart.",
-        "Users can update the quantity of an item in their cart.",
-        "Users can remove an item from their cart.",
-        "Cart total is returned correctly."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Implement an order system on the backend where a user can place an order from their current cart, storing order history (order id, items, total, timestamp, status) per user.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Placing an order clears the user's cart and saves it as a completed order.",
-        "Orders include items, total price, timestamp, and a status field.",
-        "Users can retrieve their order history."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Build a product catalog page that displays all available products in a responsive grid, with each product card showing image, name, price, and an 'Add to Cart' button. Include category filtering and a search bar.",
+      "id": "REQ-12",
+      "text": "Build an Admin Panel page at /admin accessible only to authenticated users with the admin role. The page must include: a product list table showing all products (name, category, price, stock), an 'Add Product' form (name, description, price, category, stock quantity, image URL), an 'Edit Product' form pre-populated with existing product data, and a 'Delete Product' button with confirmation. Non-admin users who visit /admin should see an access-denied message.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-8"
         ],
         "quotes": [
-          "Create an ecomerce app for me with the app name of solano7m"
+          "Okay please add me in admin panel"
         ]
       },
       "acceptanceCriteria": [
-        "Products are displayed in a responsive grid (2–4 columns depending on screen size).",
-        "Each card shows product image, name, price, and an Add to Cart button.",
-        "Users can filter products by category.",
-        "Users can search products by name.",
-        "Adding to cart triggers a visual confirmation."
+        "Navigating to /admin while unauthenticated or as a non-admin shows an access-denied screen.",
+        "Admin users see a full product list table with edit and delete actions per row.",
+        "Admin users can add a new product via a form; the product appears in the catalog after submission.",
+        "Admin users can edit an existing product; changes are reflected in the catalog.",
+        "Admin users can delete a product with a confirmation prompt; the product is removed from the catalog.",
+        "The admin panel matches the app's warm earthy visual theme."
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Build a product detail page that shows full product information (name, description, price, image, stock), allows quantity selection, and provides an 'Add to Cart' button.",
+      "id": "REQ-13",
+      "text": "Add an 'Admin' navigation link in the app header (Layout.tsx) that is visible only when the authenticated user has the admin role, linking to /admin.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-8"
         ],
         "quotes": [
-          "Create an ecomerce app for me"
+          "Okay please add me in admin panel"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking a product from the catalog navigates to its detail page.",
-        "Full product info is displayed.",
-        "Quantity selector is present and constrained by available stock.",
-        "Add to Cart button updates the cart."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Build a shopping cart page that lists all cart items with quantity controls (increment/decrement/remove), displays line-item totals and a grand total, and includes a 'Proceed to Checkout' button.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All cart items are listed with name, unit price, quantity controls, and line total.",
-        "Grand total updates dynamically as quantities change.",
-        "Items can be removed from the cart.",
-        "A 'Proceed to Checkout' button is visible."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Build a checkout page that shows an order summary and a 'Place Order' button. On confirmation, the order is submitted to the backend and the user is shown a success screen with the order ID.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Order summary lists all items, quantities, and the total.",
-        "Clicking 'Place Order' calls the backend and clears the cart.",
-        "A success screen is shown with a unique order ID.",
-        "User can navigate back to the shop after placing an order."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Build an order history page where authenticated users can view their past orders, including order date, items, total, and status.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Orders are listed in reverse chronological order.",
-        "Each entry shows order date, item list, total, and status.",
-        "Only accessible when the user is authenticated."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Apply a bold, modern retail visual theme across the entire app using a warm earthy palette (deep terracotta, cream, and charcoal), clean sans-serif typography, generous whitespace, and consistent card-based layouts with smooth hover interactions.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me with the app name of solano7m"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Color palette, typography, and spacing are consistent across all pages.",
-        "Cards have hover effects.",
-        "The Solano7m brand name is prominent in the header/navbar.",
-        "Layout is responsive on mobile and desktop."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Render the generated hero banner image and logo as static assets in the app header and catalog hero section from frontend/public/assets/generated.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Create an ecomerce app for me with the app name of solano7m"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Hero banner image is displayed at the top of the catalog page.",
-        "Logo is displayed in the navbar.",
-        "Images load from /assets/generated without backend calls."
+        "The Admin link is not visible to unauthenticated users or non-admin users.",
+        "The Admin link is visible in the header for admin users and navigates to /admin."
       ]
     }
   ],
   "constraints": [
-    "App name must be displayed as 'Solano7m' throughout the UI.",
-    "All backend logic must reside in a single Motoko actor in backend/main.mo.",
-    "Do not use external payment processors or third-party APIs.",
-    "Do not edit files under frontend/src/hooks/ or frontend/src/components/ui."
+    "All Motoko logic must remain in backend/main.mo as a single actor.",
+    "Do not modify files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui.",
+    "Admin access must be enforced on the backend, not just on the frontend."
   ],
   "nonGoals": [
-    "Real payment processing integration.",
-    "Vendor/seller dashboards or multi-seller support.",
-    "Product reviews or ratings system.",
-    "Email order confirmation notifications.",
-    "Admin panel for inventory management (initial build)."
+    "Building a separate multi-user admin role management UI.",
+    "Uploading image files directly — image URLs are used instead.",
+    "Generating an APK or mobile app."
   ],
   "imageRequirements": {
-    "required": [
-      "Wide e-commerce hero banner with warm earthy terracotta and cream tones, abstract lifestyle product backdrop with geometric shapes and subtle texture (hero-banner.dim_1400x500.png)",
-      "Minimalist wordmark logo for 'Solano7m' in charcoal lettering on a transparent background with a small decorative accent mark (solano7m-logo.dim_320x80.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

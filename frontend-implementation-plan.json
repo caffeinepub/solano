@@ -1,233 +1,54 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Solano7m E-Commerce Frontend Implementation",
+  "title": "Add Admin Panel for Product Management",
   "requirements": [
     {
-      "id": "REQ-4",
-      "summary": "Build product catalog page with grid display, category filtering, search, and Add to Cart functionality",
+      "id": "REQ-12",
+      "summary": "Build an Admin Panel page at /admin with product management capabilities (list, add, edit, delete) accessible only to authenticated admin users",
       "acceptanceCriteria": [
-        "Products are displayed in a responsive grid (2–4 columns depending on screen size).",
-        "Each card shows product image, name, price, and an Add to Cart button.",
-        "Users can filter products by category.",
-        "Users can search products by name.",
-        "Adding to cart triggers a visual confirmation."
+        "Navigating to /admin while unauthenticated or as a non-admin shows an access-denied screen.",
+        "Admin users see a full product list table with edit and delete actions per row.",
+        "Admin users can add a new product via a form; the product appears in the catalog after submission.",
+        "Admin users can edit an existing product; changes are reflected in the catalog.",
+        "Admin users can delete a product with a confirmation prompt; the product is removed from the catalog.",
+        "The admin panel matches the app's warm earthy visual theme."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useProducts.ts",
-          "operation": "create",
-          "description": "Create a React Query hook that fetches all products from the backend using actor.listProducts() and provides loading/error states."
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add TanStack Query mutations for product CRUD operations: useCreateProduct (calls createProduct), useUpdateProduct (calls updateProduct), useDeleteProduct (calls deleteProduct), and useIsCallerAdmin query (calls isCallerAdmin). Each mutation should invalidate the 'products' query key on success. Verify the authorization component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/hooks/useAddToCart.ts",
+          "path": "frontend/src/pages/AdminPage.tsx",
           "operation": "create",
-          "description": "Create a React Query mutation hook that calls actor.addToCart(productId, quantity) and invalidates the cart query on success."
-        },
-        {
-          "path": "frontend/src/pages/CatalogPage.tsx",
-          "operation": "create",
-          "description": "Create the product catalog page component that displays products in a responsive grid with TailwindCSS (grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4), implements category dropdown filter, text search input, and renders the generated hero banner image from frontend/public/assets/generated/hero-banner.dim_1400x500.png at the top of the page. Include product cards with image, name, price, and Add to Cart button. Show toast notification on successful add to cart using shadcn/ui toast component."
-        },
-        {
-          "path": "frontend/src/components/ProductCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable product card component that displays product image, name, price, and Add to Cart button with hover effects (shadow and scale transform). Apply the warm earthy color palette from the theme."
+          "description": "Create the Admin Panel page component that checks admin status using useIsCallerAdmin hook. If not admin or not authenticated, display an access-denied message. For admin users, render a product management interface with: a table listing all products (using useListProducts) showing name, category, price, stock with edit/delete actions per row; an 'Add Product' form with fields for name, description, price, category, stock quantity, and image URL; an inline or modal 'Edit Product' form pre-populated with selected product data; and a delete confirmation dialog. Use the product CRUD mutation hooks. Apply the app's warm earthy color theme using Tailwind classes matching frontend/src/index.css and frontend/tailwind.config.js tokens. Verify the authorization component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add route registration for /catalog path that renders CatalogPage component. Ensure React Router is configured with the route."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Build product detail page with full information, quantity selector, and Add to Cart",
-      "acceptanceCriteria": [
-        "Clicking a product from the catalog navigates to its detail page.",
-        "Full product info is displayed.",
-        "Quantity selector is present and constrained by available stock.",
-        "Add to Cart button updates the cart."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useProduct.ts",
-          "operation": "create",
-          "description": "Create a React Query hook that fetches a single product by ID using actor.getProduct(productId) with proper type handling for Option<Product>."
-        },
-        {
-          "path": "frontend/src/pages/ProductDetailPage.tsx",
-          "operation": "create",
-          "description": "Create the product detail page component that displays full product information (name, description, price, large image, category, stock quantity). Include a quantity selector (number input with increment/decrement buttons) constrained by available stock, and an Add to Cart button that uses useAddToCart hook. Show success toast on add."
-        },
-        {
-          "path": "frontend/src/components/ProductCard.tsx",
-          "operation": "modify",
-          "description": "Wrap the product card content in a clickable Link or onClick handler that navigates to /product/:id route using the product's ID."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route registration for /product/:id path that renders ProductDetailPage component with route parameter parsing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Build shopping cart page with item list, quantity controls, totals, and checkout button",
-      "acceptanceCriteria": [
-        "All cart items are listed with name, unit price, quantity controls, and line total.",
-        "Grand total updates dynamically as quantities change.",
-        "Items can be removed from the cart.",
-        "A 'Proceed to Checkout' button is visible."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useCart.ts",
-          "operation": "create",
-          "description": "Create a React Query hook that fetches the current user's cart using actor.getCart() and enriches cart items with full product details by calling actor.getProduct() for each productId."
-        },
-        {
-          "path": "frontend/src/hooks/useUpdateCartItem.ts",
-          "operation": "create",
-          "description": "Create a React Query mutation hook that calls actor.updateCartItem(productId, quantity) and invalidates the cart query on success."
-        },
-        {
-          "path": "frontend/src/hooks/useRemoveCartItem.ts",
-          "operation": "create",
-          "description": "Create a React Query mutation hook that calls actor.removeCartItem(productId) and invalidates the cart query on success."
-        },
-        {
-          "path": "frontend/src/pages/CartPage.tsx",
-          "operation": "create",
-          "description": "Create the shopping cart page component that lists all cart items with product name, image, unit price, quantity controls (increment/decrement buttons and remove button), and calculated line totals. Display the grand total that updates reactively. Include a 'Proceed to Checkout' button that navigates to /checkout. Show empty cart message if cart is empty. Use authorization component to ensure user is authenticated before displaying cart."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route registration for /cart path that renders CartPage component."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Build checkout page with order summary and Place Order functionality, showing success screen with order ID",
-      "acceptanceCriteria": [
-        "Order summary lists all items, quantities, and the total.",
-        "Clicking 'Place Order' calls the backend and clears the cart.",
-        "A success screen is shown with a unique order ID.",
-        "User can navigate back to the shop after placing an order."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/usePlaceOrder.ts",
-          "operation": "create",
-          "description": "Create a React Query mutation hook that calls actor.placeOrder() to submit the order, returns the order ID, and invalidates both cart and orders queries on success."
-        },
-        {
-          "path": "frontend/src/pages/CheckoutPage.tsx",
-          "operation": "create",
-          "description": "Create the checkout page component that displays an order summary (using useCart hook to fetch current cart items and calculate total), a 'Place Order' button, and handles navigation to /order-success/:orderId on successful order placement. Use authorization component to ensure user is authenticated."
-        },
-        {
-          "path": "frontend/src/pages/OrderSuccessPage.tsx",
-          "operation": "create",
-          "description": "Create the order success page component that displays a success message, the order ID from route parameters, and a button to navigate back to the catalog page (/catalog)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route registrations for /checkout and /order-success/:orderId paths that render CheckoutPage and OrderSuccessPage components respectively."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Build order history page showing past orders with details for authenticated users",
-      "acceptanceCriteria": [
-        "Orders are listed in reverse chronological order.",
-        "Each entry shows order date, item list, total, and status.",
-        "Only accessible when the user is authenticated."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useOrders.ts",
-          "operation": "create",
-          "description": "Create a React Query hook that fetches the user's order history using actor.getOrders() and enriches order items with product details for display. Query should be enabled only when user is authenticated."
-        },
-        {
-          "path": "frontend/src/pages/OrderHistoryPage.tsx",
-          "operation": "create",
-          "description": "Create the order history page component that displays all user orders in reverse chronological order. Each order entry shows the order date (formatted from timestamp), list of items with names and quantities, total amount, and status. Use authorization component to ensure user is authenticated before rendering. Show message if no orders exist."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route registration for /orders path that renders OrderHistoryPage component."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Apply bold modern retail visual theme with warm earthy palette, clean typography, and consistent layouts",
-      "acceptanceCriteria": [
-        "Color palette, typography, and spacing are consistent across all pages.",
-        "Cards have hover effects.",
-        "The Solano7m brand name is prominent in the header/navbar.",
-        "Layout is responsive on mobile and desktop."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend the Tailwind configuration to define custom colors for the warm earthy palette: deep terracotta (primary), cream (secondary), and charcoal (text/neutral). Configure custom spacing, border radius for cards, and ensure the sans-serif font family is set."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add global CSS custom properties for the color palette (--color-terracotta, --color-cream, --color-charcoal) and apply base typography styles using the sans-serif font. Set consistent body background and text colors using the earthy palette."
+          "description": "Add a new route for /admin that renders the AdminPage component. Import AdminPage and register the route in the TanStack Router configuration alongside existing routes (home, catalog, product detail, cart, checkout, order success, orders)."
         },
         {
           "path": "frontend/src/components/Layout.tsx",
-          "operation": "create",
-          "description": "Create a Layout component that wraps all pages with a consistent header/navbar containing the Solano7m brand name (rendered using the logo from frontend/public/assets/generated/solano7m-logo.dim_320x80.png), navigation links (Catalog, Cart, Orders), and login/logout button using the authorization component's LoginButton pattern. Apply the warm color scheme and generous whitespace. Include a footer with brand info."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wrap all route components with the Layout component to ensure consistent header, navbar, and footer across all pages."
-        },
-        {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
-          "operation": "create",
-          "description": "Create a profile setup modal component that appears when a user logs in for the first time (when userProfile is null). Use the authorization component pattern to call getCallerUserProfile and saveCallerUserProfile. Prompt for user's name and save it. Follow the component usage instructions for preventing modal flash by checking actorFetching, isFetched, and userProfile state. Apply the warm earthy theme."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Integrate ProfileSetupModal component in App.tsx to conditionally render when user is authenticated but has no profile, following the authorization component's usage pattern to prevent modal flash."
+          "description": "Add conditional rendering of an 'Admin' navigation link in the header that is visible only when the user is authenticated and has admin role (using useIsCallerAdmin hook). Place the Admin link in the navigation menu before or after existing links, and ensure it links to /admin. The link should respect the responsive mobile menu behavior. Verify the authorization component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-10",
-      "summary": "Render generated hero banner and logo as static assets in header and catalog hero section",
+      "id": "REQ-13",
+      "summary": "Add an 'Admin' navigation link in the app header visible only to authenticated admin users",
       "acceptanceCriteria": [
-        "Hero banner image is displayed at the top of the catalog page.",
-        "Logo is displayed in the navbar.",
-        "Images load from /assets/generated without backend calls."
+        "The Admin link is not visible to unauthenticated users or non-admin users.",
+        "The Admin link is visible in the header for admin users and navigates to /admin."
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Update the Layout navbar to display the logo image from /assets/generated/solano7m-logo.dim_320x80.png using an img tag with appropriate alt text and styling."
-        },
-        {
-          "path": "frontend/src/pages/CatalogPage.tsx",
-          "operation": "modify",
-          "description": "Ensure the hero banner image from frontend/public/assets/generated/hero-banner.dim_1400x500.png is rendered at the top of the catalog page using an img tag with src='/assets/generated/hero-banner.dim_1400x500.png', appropriate alt text, and full-width responsive styling."
+          "description": "This requirement is already covered by REQ-12's Layout.tsx modification. Ensure the Admin link implementation checks both authentication status (from useInternetIdentity) and admin role (from useIsCallerAdmin) before displaying the link."
         }
       ]
     }

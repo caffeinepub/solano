@@ -40,6 +40,23 @@ export function useSaveCallerUserProfile() {
     });
 }
 
+// ─── Admin ───────────────────────────────────────────────────────────────────
+
+export function useIsCallerAdmin() {
+    const { actor, isFetching: actorFetching } = useActor();
+    const { identity } = useInternetIdentity();
+
+    return useQuery<boolean>({
+        queryKey: ['isCallerAdmin'],
+        queryFn: async () => {
+            if (!actor) return false;
+            return actor.isCallerAdmin();
+        },
+        enabled: !!actor && !actorFetching && !!identity,
+        retry: false,
+    });
+}
+
 // ─── Products ────────────────────────────────────────────────────────────────
 
 export function useListProducts() {
@@ -65,6 +82,81 @@ export function useGetProduct(productId: bigint | null) {
             return actor.getProduct(productId);
         },
         enabled: !!actor && !isFetching && productId !== null,
+    });
+}
+
+export function useCreateProduct() {
+    const { actor } = useActor();
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (params: {
+            name: string;
+            description: string;
+            price: bigint;
+            imageUrl: string;
+            category: string;
+            stockQuantity: bigint;
+        }) => {
+            if (!actor) throw new Error('Actor not available');
+            return actor.createProduct(
+                params.name,
+                params.description,
+                params.price,
+                params.imageUrl,
+                params.category,
+                params.stockQuantity,
+            );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['products'] });
+        },
+    });
+}
+
+export function useUpdateProduct() {
+    const { actor } = useActor();
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (params: {
+            id: bigint;
+            name: string;
+            description: string;
+            price: bigint;
+            imageUrl: string;
+            category: string;
+            stockQuantity: bigint;
+        }) => {
+            if (!actor) throw new Error('Actor not available');
+            return actor.updateProduct(
+                params.id,
+                params.name,
+                params.description,
+                params.price,
+                params.imageUrl,
+                params.category,
+                params.stockQuantity,
+            );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['products'] });
+        },
+    });
+}
+
+export function useDeleteProduct() {
+    const { actor } = useActor();
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (productId: bigint) => {
+            if (!actor) throw new Error('Actor not available');
+            return actor.deleteProduct(productId);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['products'] });
+        },
     });
 }
 

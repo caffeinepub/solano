@@ -56,6 +56,14 @@ actor {
   let cartsMap = Map.empty<Principal, Map.Map<Nat, Nat>>();
   let userOrdersMap = Map.empty<Principal, Map.Map<Nat, StoreOrder>>();
 
+  // New admin registration method
+  public shared ({ caller }) func registerAdmin(newAdmin : Principal) : async () {
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+      Runtime.trap("Unauthorized: Only current admins can register new admins");
+    };
+    AccessControl.assignRole(accessControlState, caller, newAdmin, #admin);
+  };
+
   // User profile operations
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
